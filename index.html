@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>De Capture Weddings – Invoice</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f0e8;
+    color: #1a1410;
+    padding: 20px;
+  }
+  h1 { text-align: center; font-size: 1.6rem; margin-bottom: 4px; color: #1e1410; }
+  .sub { text-align: center; font-size: 0.8rem; color: #7a7268; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
+
+.card {
+background: #fff;
+border-radius: 12px;
+padding: 28px;
+max-width: 680px;
+margin: 0 auto 30px;
+box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+}
+.section-title { font-size: 0.85rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #8b4a5c; border-bottom: 1px solid #e0d9cc; padding-bottom: 6px; margin-bottom: 14px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.full { grid-column: 1 / -1; }
+label { display: block; font-size: 0.72rem; color: #7a7268; margin-bottom: 4px; font-weight: bold; }
+input, textarea, select {
+width: 100%; padding: 9px 12px;
+border: 1px solid #ddd; border-radius: 6px;
+font-size: 0.9rem; font-family: Arial, sans-serif;
+background: #faf8f3;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: #b8963e; }
+textarea { resize: vertical; min-height: 65px; }
+
+.pkg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+.pkg-btn {
+border: 1.5px solid #ddd; border-radius: 8px; padding: 10px 6px;
+background: #faf8f3; cursor: pointer; text-align: center;
+font-size: 0.75rem; color: #7a7268; transition: all 0.2s;
+}
+.pkg-btn:hover, .pkg-btn.active { border-color: #b8963e; background: #fdf6e8; color: #1a1410; }
+.pkg-btn strong { display: block; font-size: 0.95rem; color: #b8963e; }
+
+.item-row { display: grid; grid-template-columns: 2fr 0.7fr 1fr auto; gap: 8px; align-items: end; margin-bottom: 8px; }
+.rm-btn { background: #fff; border: 1px solid #ddd; border-radius: 6px; width: 34px; height: 34px; cursor: pointer; font-size: 1.1rem; color: #999; }
+.rm-btn:hover { border-color: red; color: red; }
+.add-btn { width: 100%; border: 1.5px dashed #b8963e; background: none; border-radius: 8px; padding: 9px; color: #b8963e; cursor: pointer; font-size: 0.85rem; margin-top: 6px; }
+.add-btn:hover { background: #fdf6e8; }
+
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+
+.gen-btn {
+width: 100%; margin-top: 22px; padding: 14px;
+background: #1e1410; color: #fff; border: none; border-radius: 10px;
+font-size: 1rem; cursor: pointer; letter-spacing: 0.05em;
+}
+.gen-btn:hover { background: #3a2010; }
+
+/* ── INVOICE ── */
+#inv-wrap { max-width: 780px; margin: 0 auto; display: none; }
+
+.invoice { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 40px rgba(0,0,0,0.12); }
+
+.top-bar { height: 5px; background: linear-gradient(90deg, #8b4a5c, #b8963e, #8b4a5c); }
+
+.inv-head {
+background: #1e1410; color: #fff;
+padding: 28px 36px;
+display: flex; justify-content: space-between; align-items: flex-start;
+}
+.brand-name { font-size: 1.4rem; font-weight: bold; }
+.brand-name em { color: #e2c97e; font-style: italic; }
+.brand-tag { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 4px; }
+.brand-contact { font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-top: 10px; line-height: 1.8; }
+.brand-contact a { color: #e2c97e; text-decoration: none; }
+.inv-right { text-align: right; }
+.inv-label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.inv-num { font-family: monospace; font-size: 1rem; color: #e2c97e; margin-top: 4px; }
+.inv-issued { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 6px; }
+
+.meta-bar {
+background: #8b4a5c; padding: 12px 36px;
+display: flex; justify-content: space-between;
+}
+.meta-item .ml { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+.meta-item .mv { font-family: monospace; font-size: 0.85rem; color: #fff; margin-top: 2px; }
+
+.inv-body { padding: 34px 36px; }
+
+.parties { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid #e0d9cc; }
+.party-lbl { font-size: 0.62rem; font-weight: bold; letter-spacing: 0.18em; text-transform: uppercase; color: #b8963e; margin-bottom: 6px; }
+.party-name { font-size: 1.05rem; font-weight: bold; margin-bottom: 4px; }
+.party-det { font-size: 0.8rem; color: #7a7268; line-height: 1.7; white-space: pre-line; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+thead tr { border-bottom: 2px solid #1e1410; }
+th { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7a7268; padding: 0 0 8px; text-align: left; font-weight: bold; }
+th:last-child { text-align: right; }
+tbody tr { border-bottom: 1px solid #e0d9cc; }
+td { padding: 12px 0; vertical-align: top; }
+td:last-child { text-align: right; font-family: monospace; font-size: 0.84rem; }
+.td-mono { font-family: monospace; font-size: 0.82rem; color: #7a7268; }
+
+.totals { margin-top: 20px; display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
+.tot { display: flex; gap: 50px; font-size: 0.87rem; }
+.tot span:first-child { color: #7a7268; }
+.tot span:last-child { font-family: monospace; min-width: 110px; text-align: right; }
+.tot.grand { border-top: 2px solid #1e1410; padding-top: 10px; margin-top: 4px; font-size: 1rem; font-weight: bold; }
+.tot.grand span:last-child { color: #8b4a5c; }
+
+.notes-box { margin-top: 28px; padding: 16px 20px; background: #faf8f3; border-radius: 8px; border-left: 3px solid #b8963e; font-size: 0.8rem; color: #7a7268; line-height: 1.7; }
+.notes-box strong { display: block; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: #b8963e; margin-bottom: 5px; }
+
+.inv-foot {
+background: #1e1410; padding: 18px 36px;
+display: flex; justify-content: space-between; align-items: center;
+}
+.foot-quote { font-style: italic; color: #e2c97e; font-size: 0.85rem; }
+.badge { background: #8b4a5c; color: #fff; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; }
+
+.actions { display: flex; gap: 12px; justify-content: center; margin-top: 18px; }
+.abtn { padding: 11px 26px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; border: none; }
+.abtn.dark { background: #1e1410; color: #fff; }
+.abtn.dark:hover { background: #3a2010; }
+.abtn.light { background: #fff; border: 1px solid #ddd; color: #1a1410; }
+.abtn.light:hover { border-color: #b8963e; }
+
+@media (max-width: 540px) {
+.grid2, .grid3 { grid-template-columns: 1fr; }
+.pkg-grid { grid-template-columns: 1fr 1fr; }
+.item-row { grid-template-columns: 1fr 1fr; }
+.parties { grid-template-columns: 1fr; }
+.inv-head { flex-direction: column; gap: 14px; }
+.inv-right { text-align: left; }
+.meta-bar { flex-wrap: wrap; gap: 10px; }
+.inv-body { padding: 24px 20px; }
+.inv-foot { flex-direction: column; gap: 10px; }
+}
+
+@media print {
+body { background: #fff; padding: 0; }
+.card, .actions, h1, .sub { display: none !important; }
+#inv-wrap { display: block !important; }
+.invoice { box-shadow: none; border-radius: 0; }
+}
+</style>
+
+</head>
+<body>
+
+<h1>✦ De Capture Weddings</h1>
+<div class="sub">Photo &amp; Video · Invoice Generator</div>
+
+<div class="card">
+  <div class="section-title">Quick Packages</div>
+  <div class="pkg-grid">
+    <div class="pkg-btn" id="pkg-basic" onclick="loadPkg('basic')"><strong>₹25,000</strong>Basic<br/><small>Photo Only</small></div>
+    <div class="pkg-btn" id="pkg-standard" onclick="loadPkg('standard')"><strong>₹45,000</strong>Standard<br/><small>Photo + Video</small></div>
+    <div class="pkg-btn" id="pkg-premium" onclick="loadPkg('premium')"><strong>₹80,000</strong>Premium<br/><small>Full Coverage</small></div>
+    <div class="pkg-btn" id="pkg-album" onclick="loadPkg('album')"><strong>₹12,000</strong>Album<br/><small>Print Album</small></div>
+    <div class="pkg-btn" id="pkg-reel" onclick="loadPkg('reel')"><strong>₹8,000</strong>Reel<br/><small>Highlights</small></div>
+    <div class="pkg-btn" id="pkg-custom" onclick="loadPkg('custom')">+ Custom<br/><small>Build your own</small></div>
+  </div>
+
+  <div class="section-title">Client Details</div>
+  <div class="grid2">
+    <div><label>Couple / Client Name</label><input id="cName" placeholder="Rahul & Priya" /></div>
+    <div><label>Phone</label><input id="cPhone" placeholder="+91 98765 43210" /></div>
+    <div><label>Email</label><input id="cEmail" placeholder="rahul@email.com" /></div>
+    <div><label>Wedding Date</label><input id="cDate" type="date" /></div>
+    <div class="full"><label>Venue / Address</label><input id="cVenue" placeholder="The Grand Leela Palace, Mumbai" /></div>
+  </div>
+
+  <div class="section-title">Services</div>
+  <div id="items"></div>
+  <button class="add-btn" onclick="addItem()">+ Add Service</button>
+
+  <div class="grid3">
+    <div><label>Advance Paid (₹)</label><input id="advance" type="number" min="0" placeholder="0" /></div>
+    <div><label>GST (%)</label><input id="gst" type="number" value="18" min="0" max="100" /></div>
+    <div><label>Currency</label>
+      <select id="cur">
+        <option value="₹">INR (₹)</option>
+        <option value="$">USD ($)</option>
+        <option value="€">EUR (€)</option>
+        <option value="£">GBP (£)</option>
+      </select>
+    </div>
+  </div>
+  <div style="margin-top:14px">
+    <label>Notes / Payment Terms</label>
+    <textarea id="notes" placeholder="50% advance to confirm booking. Balance due on wedding day. Delivery in 45–60 days."></textarea>
+  </div>
+
+<button class="gen-btn" onclick="generate()">Generate Invoice →</button>
+
+</div>
+
+<!-- INVOICE PREVIEW -->
+
+<div id="inv-wrap">
+  <div class="invoice">
+    <div class="top-bar"></div>
+    <div class="inv-head">
+      <div>
+        <div class="brand-name"><em>De Capture</em> Weddings</div>
+        <div class="brand-tag">Capturing Moments · Crafting Memories</div>
+        <div class="brand-contact">
+          📞 +91 95268 43616<br>
+          ✉ <a href="mailto:decaptureweddings@gmail.com">decaptureweddings@gmail.com</a>
+        </div>
+      </div>
+      <div class="inv-right">
+        <div class="inv-label">Invoice</div>
+        <div class="inv-num" id="invNum"></div>
+        <div class="inv-issued" id="invDate"></div>
+      </div>
+    </div>
+
+```
+<div class="meta-bar">
+  <div class="meta-item"><div class="ml">Wedding Date</div><div class="mv" id="mWdate">—</div></div>
+  <div class="meta-item"><div class="ml">Venue</div><div class="mv" id="mVenue">—</div></div>
+  <div class="meta-item"><div class="ml">Status</div><div class="mv">Unpaid</div></div>
+</div>
+
+<div class="inv-body">
+  <div class="parties">
+    <div>
+      <div class="party-lbl">From</div>
+      <div class="party-name"><em>De Capture</em> Weddings</div>
+      <div class="party-det">+91 95268 43616
+```
+
+decaptureweddings@gmail.com
+Photo & Video Wedding Coverage</div>
+</div>
+<div>
+<div class="party-lbl">Bill To</div>
+<div class="party-name" id="pName"></div>
+<div class="party-det" id="pDet"></div>
+</div>
+</div>
+
+```
+  <table>
+    <thead><tr><th>Service / Description</th><th>Qty</th><th>Unit Price</th><th>Amount</th></tr></thead>
+    <tbody id="invRows"></tbody>
+  </table>
+
+  <div class="totals">
+    <div class="tot"><span>Subtotal</span><span id="tSub"></span></div>
+    <div class="tot" id="tGstRow"><span>GST (<span id="tGstPct"></span>%)</span><span id="tGst"></span></div>
+    <div class="tot" id="tAdvRow"><span>Advance Paid</span><span id="tAdv" style="color:#27ae60"></span></div>
+    <div class="tot grand"><span>Balance Due</span><span id="tDue"></span></div>
+  </div>
+
+  <div class="notes-box" id="notesBox" style="display:none">
+    <strong>Notes &amp; Payment Terms</strong>
+    <span id="notesText"></span>
+  </div>
+</div>
+
+<div class="inv-foot">
+  <div class="foot-quote">"Every love story deserves to be remembered."</div>
+  <div class="badge">Awaiting Payment</div>
+</div>
+```
+
+  </div>
+
+  <div class="actions">
+    <button class="abtn light" onclick="document.getElementById('inv-wrap').style.display='none'; window.scrollTo({top:0,behavior:'smooth'})">← Edit</button>
+    <button class="abtn dark" onclick="window.print()">🖨 Print / Save PDF</button>
+  </div>
+</div>
+
+<script>
+  var ic = 0;
+
+  var PKGS = {
+    basic:    [['Wedding Photography (Full Day)', 1, 25000]],
+    standard: [['Wedding Photography (Full Day)', 1, 30000], ['Wedding Videography (Full Day)', 1, 15000]],
+    premium:  [['Wedding Photography (Full Day)', 1, 35000], ['Cinematic Videography', 1, 25000], ['Drone Aerial Coverage', 1, 10000], ['Highlights Reel (3–5 min)', 1, 10000]],
+    album:    [['Premium Print Album (40 pages)', 1, 12000]],
+    reel:     [['Instagram Highlights Reel', 1, 8000]],
+    custom:   []
+  };
+
+  function loadPkg(key) {
+    document.getElementById('items').innerHTML = '';
+    ic = 0;
+    document.querySelectorAll('.pkg-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('pkg-' + key).classList.add('active');
+    var rows = PKGS[key];
+    if (!rows || !rows.length) { addItem(); return; }
+    for (var i = 0; i < rows.length; i++) addItem(rows[i][0], rows[i][1], rows[i][2]);
+  }
+
+  function addItem(d, q, p) {
+    ic++;
+    var id = ic;
+    var el = document.createElement('div');
+    el.className = 'item-row';
+    el.id = 'ir' + id;
+    el.innerHTML = '<div><label>Description</label><input class="id" placeholder="Service" value="' + (d||'') + '"/></div>'
+      + '<div><label>Qty</label><input class="iq" type="number" min="1" value="' + (q||1) + '"/></div>'
+      + '<div><label>Unit Price</label><input class="ip" type="number" min="0" step="100" placeholder="0" value="' + (p||'') + '"/></div>'
+      + '<button class="rm-btn" onclick="document.getElementById(\'ir' + id + '\').remove()">×</button>';
+    document.getElementById('items').appendChild(el);
+  }
+
+  function fmt(n, s) {
+    return s + parseFloat(n).toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+
+  function genNum() {
+    var d = new Date();
+    return 'DCW-' + d.getFullYear() + pad(d.getMonth()+1) + pad(d.getDate()) + '-' + (Math.floor(Math.random()*900)+100);
+  }
+
+  function pad(n) { return String(n).padStart(2,'0'); }
+
+  function generate() {
+    var s = document.getElementById;
+    var sym = s('cur').value;
+    var cName = s('cName').value || 'Valued Client';
+    var cPhone = s('cPhone').value;
+    var cEmail = s('cEmail').value;
+    var cDate = s('cDate').value;
+    var cVenue = s('cVenue').value;
+    var gst = parseFloat(s('gst').value) || 0;
+    var adv = parseFloat(s('advance').value) || 0;
+    var notes = s('notes').value;
+
+    var rows = document.querySelectorAll('.item-row');
+    var items = [];
+    for (var i = 0; i < rows.length; i++) {
+      var desc = rows[i].querySelector('.id').value || 'Service';
+      var qty = parseFloat(rows[i].querySelector('.iq').value) || 1;
+      var price = parseFloat(rows[i].querySelector('.ip').value) || 0;
+      items.push({desc:desc, qty:qty, price:price});
+    }
+    if (!items.length) { addItem(); return; }
+
+    var subtotal = items.reduce(function(acc, i){ return acc + i.qty * i.price; }, 0);
+    var taxAmt = subtotal * gst / 100;
+    var grand = subtotal + taxAmt;
+    var balance = grand - adv;
+
+    var now = new Date();
+    s('invNum').textContent = genNum();
+    s('invDate').textContent = now.toLocaleDateString('en-IN', {year:'numeric', month:'long', day:'numeric'});
+
+    if (cDate) {
+      var wd = new Date(cDate);
+      s('mWdate').textContent = wd.toLocaleDateString('en-IN', {year:'numeric', month:'long', day:'numeric'});
+    }
+    s('mVenue').textContent = cVenue || '—';
+
+    s('pName').textContent = cName;
+    var det = [cPhone, cEmail, cVenue].filter(Boolean).join('\n');
+    s('pDet').textContent = det;
+
+    var tbody = s('invRows');
+    tbody.innerHTML = '';
+    for (var j = 0; j < items.length; j++) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + items[j].desc + '</td>'
+        + '<td class="td-mono">' + items[j].qty + '</td>'
+        + '<td class="td-mono">' + fmt(items[j].price, sym) + '</td>'
+        + '<td>' + fmt(items[j].qty * items[j].price, sym) + '</td>';
+      tbody.appendChild(tr);
+    }
+
+    s('tSub').textContent = fmt(subtotal, sym);
+    s('tGstPct').textContent = gst;
+    s('tGst').textContent = fmt(taxAmt, sym);
+    s('tGstRow').style.display = gst > 0 ? 'flex' : 'none';
+
+    if (adv > 0) {
+      s('tAdvRow').style.display = 'flex';
+      s('tAdv').textContent = '− ' + fmt(adv, sym);
+    } else {
+      s('tAdvRow').style.display = 'none';
+    }
+    s('tDue').textContent = fmt(balance, sym);
+
+    if (notes) {
+      s('notesBox').style.display = 'block';
+      s('notesText').textContent = notes;
+    } else {
+      s('notesBox').style.display = 'none';
+    }
+
+    var wrap = document.getElementById('inv-wrap');
+    wrap.style.display = 'block';
+    setTimeout(function(){ wrap.scrollIntoView({behavior:'smooth', block:'start'}); }, 100);
+  }
+
+  // Start with one blank item
+  addItem();
+</script>
+
+</body>
+</html>
