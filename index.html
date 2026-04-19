@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="UTF-8">
@@ -26,17 +25,22 @@ textarea{height:65px;resize:vertical;}
 /* ===== INVOICE ===== */
 #inv{display:none;margin-bottom:14px;}
 
-.inv-wrap{background:#fff;border-radius:0;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.15);}
+.inv-wrap{background:#fff;border-radius:0;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.15); display: block; position: relative;}
 
 /* Gold top strip */
 .gold-strip{height:6px;background:linear-gradient(90deg,#c9a84c,#f0d080,#c9a84c);}
 
 /* Dark header */
-.inv-head{background:#1a0a05;padding:28px 30px 22px;position:relative;overflow:hidden;}
-.inv-head::after{content:’’;position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(201,168,76,0.07);}
-.inv-head::before{content:’’;position:absolute;right:40px;bottom:-40px;width:100px;height:100px;border-radius:50%;background:rgba(201,168,76,0.05);}
-.head-top{display:flex;justify-content:space-between;align-items:flex-start;}
-.brand-block .brand{font-size:22px;font-weight:bold;color:#fff;letter-spacing:1px;}
+/* Adjusted slightly to match the pure black background of the logo */
+.inv-head{background:#000000;padding:28px 30px 22px;position:relative;overflow:hidden;}
+.inv-head::after{content:'';position:absolute;right:-30px;top:-30px;width:160px;height:160px;border-radius:50%;background:rgba(201,168,76,0.07);}
+.inv-head::before{content:'';position:absolute;right:40px;bottom:-40px;width:100px;height:100px;border-radius:50%;background:rgba(201,168,76,0.05);}
+.head-top{display:flex;justify-content:space-between;align-items:flex-start; position: relative; z-index: 2;}
+
+/* Logo added here */
+.brand-logo{max-height:85px;margin-bottom:8px;border-radius:0px;display:block; object-fit: contain;}
+
+.brand-block .brand{display:none; /* Hidden since text is in the logo now */ font-size:22px;font-weight:bold;color:#fff;letter-spacing:1px;}
 .brand-block .brand em{color:#c9a84c;font-style:italic;}
 .brand-block .tagline{font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:3px;text-transform:uppercase;margin-top:4px;font-family:Arial,sans-serif;}
 .brand-block .contacts{margin-top:14px;}
@@ -44,7 +48,7 @@ textarea{height:65px;resize:vertical;}
 .brand-block .contacts span{color:#c9a84c;}
 .inv-badge{text-align:right;}
 .inv-badge .word{font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:3px;font-family:Arial,sans-serif;text-transform:uppercase;}
-.inv-badge .number{font-family:‘Courier New’,monospace;color:#c9a84c;font-size:14px;margin-top:4px;letter-spacing:1px;}
+.inv-badge .number{font-family:'Courier New',monospace;color:#c9a84c;font-size:14px;margin-top:4px;letter-spacing:1px;font-weight:bold;}
 .inv-badge .date{font-size:10px;color:rgba(255,255,255,0.4);margin-top:6px;font-family:Arial,sans-serif;}
 
 /* Rose meta bar */
@@ -70,16 +74,16 @@ th:last-child{text-align:right;}
 tbody tr:nth-child(even){background:#faf7f2;}
 tbody tr:nth-child(odd){background:#fff;}
 td{padding:11px 12px;font-size:12px;border-bottom:1px solid #f0ebe0;font-family:Arial,sans-serif;}
-td:last-child{text-align:right;font-family:‘Courier New’,monospace;font-size:12px;}
+td:last-child{text-align:right;font-family:'Courier New',monospace;font-size:12px; font-weight: bold; color: #1a0a05;}
 td:nth-child(2){text-align:center;color:#999;}
-td:nth-child(3){text-align:right;color:#999;font-family:‘Courier New’,monospace;font-size:12px;}
+td:nth-child(3){text-align:right;color:#999;font-family:'Courier New',monospace;font-size:12px;}
 
 /* Totals */
-.totals-section{display:flex;justify-content:flex-end;margin-top:0;}
+.totals-section{display:flex;justify-content:flex-end;margin-top:20px;}
 .totals-box{width:260px;background:#faf7f2;border-left:3px solid #c9a84c;padding:14px 16px;}
 .trow{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;font-family:Arial,sans-serif;}
 .trow span:first-child{color:#888;}
-.trow span:last-child{font-family:‘Courier New’,monospace;}
+.trow span:last-child{font-family:'Courier New',monospace;}
 .trow.grand{border-top:2px solid #1a0a05;margin-top:6px;padding-top:10px;font-weight:bold;font-size:15px;}
 .trow.grand span:first-child{color:#1a0a05;}
 .trow.grand span:last-child{color:#6b2240;font-size:16px;}
@@ -93,10 +97,11 @@ td:nth-child(3){text-align:right;color:#999;font-family:‘Courier New’,monosp
 .divider{height:1px;background:linear-gradient(90deg,transparent,#c9a84c,transparent);margin:22px 0;}
 
 /* Footer */
+.inv-foot-container { width: 100%; }
 .inv-foot{background:#1a0a05;padding:16px 30px;display:flex;justify-content:space-between;align-items:center;}
 .foot-quote{color:#c9a84c;font-size:12px;font-style:italic;}
 .foot-right{text-align:right;}
-.status-pill{background:#6b2240;color:#fff;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;font-family:Arial,sans-serif;}
+.status-pill{background:#6b2240;color:#fff;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;font-family:Arial,sans-serif; display: inline-block;}
 .foot-web{font-size:9px;color:rgba(255,255,255,0.3);margin-top:4px;font-family:Arial,sans-serif;letter-spacing:1px;}
 
 /* Bottom gold strip */
@@ -110,16 +115,38 @@ td:nth-child(3){text-align:right;color:#999;font-family:‘Courier New’,monosp
 
 /* ===== PRINT STYLES ===== */
 @media print{
-*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
-body{background:#fff;padding:0;margin:0;}
-.form-section,.acts,h2,.sub{display:none!important;}
-#inv{display:block!important;}
-.inv-wrap{box-shadow:none;}
-.gold-strip,.gold-strip-bottom{-webkit-print-color-adjust:exact;}
-.inv-head{-webkit-print-color-adjust:exact;}
-.meta-bar{-webkit-print-color-adjust:exact;}
-.inv-foot{-webkit-print-color-adjust:exact;}
-thead tr{-webkit-print-color-adjust:exact;}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important;}
+  @page { size: A4; margin: 0; }
+  body, html { background: #fff; padding: 0; margin: 0; }
+  .form-section, .acts, h2, .sub { display: none!important; }
+  
+  #inv { display: block!important; }
+  
+  /* Force precisely one page layout */
+  .inv-wrap { 
+      box-shadow: none; 
+      border-radius: 0; 
+      position: relative; 
+      min-height: 296.5mm; 
+      display: block; 
+  }
+  
+  .inv-body { 
+      padding-bottom: 120px; /* Leave space so content doesn't hit footer */
+  }
+
+  /* Dock footer to bottom absolutely */
+  .inv-foot-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+  }
+
+  .gold-strip, .gold-strip-bottom { -webkit-print-color-adjust: exact; }
+  .inv-head { -webkit-print-color-adjust: exact; }
+  .meta-bar { -webkit-print-color-adjust: exact; }
+  .inv-foot { -webkit-print-color-adjust: exact; page-break-inside: avoid; }
+  thead tr { -webkit-print-color-adjust: exact; }
 }
 </style>
 
@@ -155,15 +182,13 @@ thead tr{-webkit-print-color-adjust:exact;}
 
 </div>
 
-<!-- INVOICE OUTPUT -->
-
 <div id="inv">
   <div class="inv-wrap">
     <div class="gold-strip"></div>
     <div class="inv-head">
       <div class="head-top">
         <div class="brand-block">
-          <div class="brand"><em>De Capture</em> Weddings</div>
+          <img src="data:image/png;base64,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" alt="De Capture Logo" class="brand-logo">
           <div class="tagline">Capturing Moments · Crafting Memories</div>
           <div class="contacts">
             <div>📞 <span>+91 95268 43616</span></div>
@@ -178,82 +203,79 @@ thead tr{-webkit-print-color-adjust:exact;}
       </div>
     </div>
 
-```
-<div class="meta-bar">
-  <div class="meta-item"><div class="ml">Wedding Date</div><div class="mv" id="mwd">—</div></div>
-  <div class="meta-item" style="text-align:right"><div class="ml">Venue</div><div class="mv" id="mvn">—</div></div>
-</div>
+    <div class="meta-bar">
+      <div class="meta-item"><div class="ml">Wedding Date</div><div class="mv" id="mwd">—</div></div>
+      <div class="meta-item" style="text-align:right"><div class="ml">Venue</div><div class="mv" id="mvn">—</div></div>
+    </div>
 
-<div class="inv-body">
-  <div class="parties">
-    <div>
-      <div class="party-lbl">From</div>
-      <div class="party-name" style="font-style:italic">De Capture Weddings</div>
-      <div class="party-det">+91 95268 43616
-```
-
+    <div class="inv-body">
+      <div class="parties">
+        <div>
+          <div class="party-lbl">From</div>
+          <div class="party-name" style="font-style:italic">De Capture Weddings</div>
+          <div class="party-det">+91 95268 43616
 decaptureweddings@gmail.com
 Photo & Video Coverage</div>
-</div>
-<div>
-<div class="party-lbl">Bill To</div>
-<div class="party-name" id="pname"></div>
-<div class="party-det" id="pdet"></div>
-</div>
-</div>
+        </div>
+        <div>
+          <div class="party-lbl">Bill To</div>
+          <div class="party-name" id="pname"></div>
+          <div class="party-det" id="pdet"></div>
+        </div>
+      </div>
 
-```
-  <div class="tbl-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Service / Description</th>
-          <th style="text-align:center">Qty</th>
-          <th style="text-align:right">Unit Price</th>
-          <th style="text-align:right">Amount</th>
-        </tr>
-      </thead>
-      <tbody id="irows"></tbody>
-    </table>
-  </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Service / Description</th>
+              <th style="text-align:center">Qty</th>
+              <th style="text-align:right">Unit Price</th>
+              <th style="text-align:right">Amount</th>
+            </tr>
+          </thead>
+          <tbody id="irows"></tbody>
+        </table>
+      </div>
 
-  <div class="totals-section">
-    <div class="totals-box">
-      <div class="trow" id="tr-sub"><span>Subtotal</span><span id="tsub"></span></div>
-      <div class="trow" id="tr-gst"><span>GST (<span id="tgp"></span>%)</span><span id="tgv"></span></div>
-      <div class="trow" id="tr-adv" style="display:none"><span>Advance Paid</span><span id="tav" style="color:#27ae60"></span></div>
-      <div class="trow grand"><span>Balance Due</span><span id="tdue"></span></div>
+      <div class="totals-section">
+        <div class="totals-box">
+          <div class="trow" id="tr-sub"><span>Subtotal</span><span id="tsub"></span></div>
+          <div class="trow" id="tr-gst"><span>GST (<span id="tgp"></span>%)</span><span id="tgv"></span></div>
+          <div class="trow" id="tr-adv" style="display:none"><span>Advance Paid</span><span id="tav" style="color:#27ae60"></span></div>
+          <div class="trow grand"><span>Balance Due</span><span id="tdue"></span></div>
+        </div>
+      </div>
+
+      <div class="note-box" id="nbox" style="display:none">
+        <div class="note-lbl">Notes &amp; Payment Terms</div>
+        <div class="note-txt" id="ntxt"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div style="text-align:center;font-size:10px;color:#ccc;font-family:Arial,sans-serif;letter-spacing:1px;">
+        Thank you for choosing De Capture Weddings · decaptureweddings@gmail.com
+      </div>
     </div>
-  </div>
 
-  <div class="note-box" id="nbox" style="display:none">
-    <div class="note-lbl">Notes &amp; Payment Terms</div>
-    <div class="note-txt" id="ntxt"></div>
-  </div>
-
-  <div class="divider"></div>
-
-  <div style="text-align:center;font-size:10px;color:#ccc;font-family:Arial,sans-serif;letter-spacing:1px;">
-    Thank you for choosing De Capture Weddings · decaptureweddings@gmail.com
-  </div>
-</div>
-
-<div class="inv-foot">
-  <div class="foot-quote">"Every love story deserves to be remembered."</div>
-  <div class="foot-right">
-    <div class="status-pill">Unpaid</div>
-    <div class="foot-web">ajinasrm.github.io/De-Capture-invoice</div>
-  </div>
-</div>
-<div class="gold-strip-bottom"></div>
-```
+    <div class="inv-foot-container">
+        <div class="inv-foot">
+          <div class="foot-quote">"Every love story deserves to be remembered."</div>
+          <div class="foot-right">
+            <div class="status-pill">Unpaid</div>
+            <div class="foot-web">ajinasrm.github.io/De-Capture-invoice</div>
+          </div>
+        </div>
+        <div class="gold-strip-bottom"></div>
+    </div>
 
   </div>
 </div>
 
 <div class="acts" id="acts" style="display:none">
   <button class="abtn light" onclick="editInv()">← Edit</button>
-  <button class="abtn dark" onclick="window.print()">🖨 Save as PDF</button>
+  <button class="abtn dark" onclick="window.print()">🖨 Save as PDF / Print</button>
 </div>
 
 <script>
